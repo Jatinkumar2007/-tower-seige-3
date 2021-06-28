@@ -1,148 +1,181 @@
 const Engine = Matter.Engine;
-const World= Matter.World;
+const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
-
 var engine, world;
-var stand1, stand1, ground1;
-var box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16, box17, box18;
-var polygon1, slingShot;
+var score;
+var holder,ball,ground;
+var stand1,stand2;
+var ball;
+var slingShot;
 var score = 0;
-var backgroundImg;
-var gameState = "on slingshot";
-var bg = "Sprites/bg.jpg";
 
-function preload() {
-  getBackgroundImg();
-  backgroundImg = loadImage("Sprites/bg.jpg");
+function preload(){
+ // polygon_img=loadImage("polygon.png");
+ // backgroundImg=loadImage("bg.png");
 }
 
 function setup() {
-  createCanvas(800,400);
-  engine = Engine.create();
+  engine  = Engine.create();
   world = engine.world;
+  
+  createCanvas(900,400);
+  ground = new Ground();
+  stand1 = new Stand(380,300,270,10);
+  stand2 = new Stand(700,200,200,10);
+ 
+  //level one
+  block1 = new Block(280,275,30,40);  
+  block2 = new Block(310,275,30,40);
+  block3 = new Block(340,275,30,40);
+  block4 = new Block(370,275,30,40);
+  block5 = new Block(400,275,30,40);
+  block6 = new Block(430,275,30,40);
+  block7 = new Block(460,275,30,40);
+  block8 = new Block(490,275,30,40);
+  //level two
+  block9 = new Block(310,235,30,40);
+  block10 = new Block(340,235,30,40);
+  block11 = new Block(370,235,30,40);
+  block12 = new Block(400,235,30,40);
+  block13 = new Block(430,235,30,40);
+  block14 = new Block(460,235,30,40);
+  //level three
+  block15 = new Block(340,195,30,40);
+  block16 = new Block(370,195,30,40);
+  block17 = new Block(400,195,30,40);
+  block18 = new Block(430,195,30,40);
+  //level four
+  block19 = new Block(370,155,30,40);
+  block20 = new Block(400,155,30,40);
+  //level five
+  block21 = new Block(385,115,30,40);
 
-  createSprite(400, 200, 50, 50);
+  //set two 
+  //level one
+  blocks1 = new Block(640,175,30,40);
+  blocks2 = new Block(670,175,30,40);
+  blocks3 = new Block(700,175,30,40);
+  blocks4 = new Block(730,175,30,40);
+  blocks5 = new Block(760,175,30,40);
+  //level two
+  blocks6 = new Block(670,135,30,40);
+  blocks7 = new Block(700,135,30,40);
+  blocks8 = new Block(730,135,30,40);
+  //level three
+  blocks9 = new Block(700,95,30,40);
 
-  stand1 = new Ground(390,height - 100,200,20);
-  stand2 = new Ground(650,height - 200,200,20);
-  ground1 = new Ground(400,height + 50,800,20);
+  //ball  with slings
+  ball = Bodies.circle(50,200,20);
+  World.add(world,ball);
 
-  box1 = new Box(330, 235, 30, 40);
-  box2 = new Box(360, 235, 30, 40);
-  box3 = new Box(390, 235, 30, 40);
-  box4 = new Box(420, 235, 30, 40);
-  box5 = new Box(450, 235, 30, 40);
+  slingShot = new SlingShot(this.ball,{x:200,y:200});
 
-  box6 = new Box(360, 195, 30, 40);
-  box7 = new Box(390, 195, 30, 40);
-  box8 = new Box(420, 195, 30, 40);
-
-  box9 = new Box(390, 185, 30, 40);
-
-  box10 = new Box(590, 135, 30, 40);
-  box11 = new Box(620, 135, 30, 40);
-  box12 = new Box(650, 135, 30, 40);
-  box13 = new Box(680, 135, 30, 40);
-  box14 = new Box(710, 135, 30, 40);
-
-  box15 = new Box(620, 85, 30, 40);
-  box16 = new Box(650, 85, 30, 40);
-  box17 = new Box(680, 85, 30, 40);
-
-  box18 = new Box(650, 55, 30, 40);
-
-  polygon1 = new Polygon(100, 280, 40);
-
-  slingShot = new SlingShot(polygon1.body, {x: 150, y: 150});
 }
 
 function draw() {
-  if(backgroundImg) {
-    background(backgroundImg);
-}
-  
-  noStroke();
-  textSize(20);
-  fill("white");
-  text("SCORE :" + score, 650, 40);
-  text("Press the space key for another chance!", 400, 380);
-
+ // background(backgroundImg);  
+ background("white")
   Engine.update(engine);
+  strokeWeight(2);
+  stroke("white");
+  textSize(13);
+  fill("red");
+  text("Score :"+ score, width-300, 50);
 
-  stroke("black");
-
-  box1.score();
-  box1.display();
-  box2.score();
-  box2.display();
-  box3.score();
-  box3.display();
-  box4.score();
-  box4.display();
-  box5.score();
-  box5.display();
-  box6.score();
-  box6.display();
-  box7.score();
-  box7.display();
-  box8.score();
-  box8.display();
-  box9.score();
-  box9.display();
-  box10.score();
-  box10.display();
-  box11.score();
-  box11.display();
-  box12.score();
-  box12.display();
-  box13.score();
-  box13.display();
-  box14.score();
-  box14.display();
-  box15.score();
-  box15.display();
-  box16.score();
-  box16.display();
-  box17.score();
-  box17.display();
-  box18.score();
-  box18.display();
+  
+ // ground.display();
+  strokeWeight(2);
+  stroke(15);
+  
   stand1.display();
-  stand2.display()
-  ground1.display();
-  polygon1.display();
+  stand2.display();
+  
+  stroke(15);
+  fill("black")
+  block1.display();
+  block1.score();
+  block2.display();
+  block2.score();
+  block3.display();
+  block3.score();
+  block4.display();
+  block4.score();
+  block5.display();
+  block5.score();
+  block6.display();
+  block6.score();
+  block7.display();
+  block7.score();
+  block8.display();
+  block8.score();
+  stroke(15)
+  fill("orange")
+  block9.display();
+  block9.score();
+  block10.display();
+  block10.score();
+  block11.display();
+  block11.score();
+  block12.display();
+  block12.score();
+  block13.display();
+  block13.score();
+  block14.display();
+  block14.score();
+ stroke(15)
+ fill("violet")
+  block15.display();
+  block15.score();
+  block16.display();
+  block16.score();
+  block17.display();
+  block17.score();
+  block18.display();
+  block18.score();
+    stroke(15)
+    fill("green")
+  block19.display();
+  block19.score();
+  block20.display();
+  block20.score();
+ stroke(15)
+ fill("blue")
+  block21.display();
+
+  stroke(15)
+  fill("red")
+  blocks1.display();
+  blocks2.display();
+  blocks3.display();
+  blocks4.display();
+  blocks5.display();
+  stroke(15)
+  fill("yellow")
+  blocks6.display();
+  blocks7.display();
+  blocks8.display();
+  stroke(15)
+  fill("pink")
+  blocks9.display();
+  text("drag the line and release to hit the crazy boxes",600,250)
+ //imageMode(CENTER)
+ //ball = loadImage(polygon_img ,ball.position.x-50,ball.position.y-80,40,40);
+ // ellipseMode(RADIUS);
+  ellipse(ball.position.x,ball.position.y,20);
   slingShot.display();
 }
 
 function mouseDragged(){
-  if(gameState!=="launched"){
-    Matter.Body.setPosition(polygon1.body, {x: mouseX , y: mouseY});
-  }
+  Matter.Body.setPosition(this.ball,{x:mouseX,y:mouseY});
 }
 
-function mouseReleased() {
+function mouseReleased(){
   slingShot.fly();
-  gameState = "launched";
 }
 
-function keyPressed() {
-  if(keyCode === 32) {
-      slingShot.attach(polygon1.body);
-      gameState = "on slingshot";
+function keyPressed(){
+  if(keyCode === 32){
+      slingShot.attach(this.ball);
   }
-}
-
-async function getBackgroundImg() {
-  var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
-  var responseJSON = await response.json();
-  var date = responseJSON.datetime;
-  var hour = date.slice(11, 13);
-  if(hour>=06 && hour<=19){
-      bg = "Sprites/bg.jpg"
-  } else {
-      bg = "Sprites/bg1.jpg"
-  }
-  backgroundImg = loadImage(bg);
-  console.log(backgroundImg);
 }
